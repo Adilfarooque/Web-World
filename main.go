@@ -10,11 +10,17 @@ import (
 
 func main(){
 	r := mux.NewRouter()
-	r.HandleFunc("/",handle).Methods("GET")
+	r.HandleFunc("/hello",helloHandler).Methods("GET")
+	r.HandleFunc("/goodbye",goodbyeHandler).Methods("GET")
 	http.Handle("/",r)
 	http.ListenAndServe(":8080",nil)
+
 }
 
-func handle(w http.ResponseWriter , r *http.Request){
+func helloHandler(w http.ResponseWriter , r *http.Request){
 	fmt.Fprint(w,"Hello World!")
+}
+
+func goodbyeHandler(w http.ResponseWriter , r *http.Request){
+	fmt.Fprint(w,"Goodbye!")
 }
