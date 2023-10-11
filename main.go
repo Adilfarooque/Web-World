@@ -6,8 +6,8 @@ import (
 	"net/http"
 )
 
-func handle(w http.ResponseWriter, r *http.Request){
-	fmt.Fprint(w ,"Hello World!")
+func handle(w http.ResponseWriter , r *http.Request){
+	fmt.Fprint(w,"Hello World!")
 }
 
 func main(){
