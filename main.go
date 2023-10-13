@@ -1,26 +1,22 @@
 package main
 
-
 import (
-	"fmt"
+	"html/template"
 	"net/http"
+	"path/filepath"
 	"github.com/gorilla/mux"
 )
 
+var templates *template.Template
 
-func main(){
+func main() {
+	templates = template.Must(template.ParseGlob(filepath.Join("templates/* .html")))
 	r := mux.NewRouter()
-	r.HandleFunc("/hello",helloHandler).Methods("GET")
-	r.HandleFunc("/goodbye",goodbyeHandler).Methods("GET")
-	http.Handle("/",r)
-	http.ListenAndServe(":8080",nil)
-
+	r.HandleFunc("/", indexHandle).Methods("GET")
+	http.Handle("/", r)
+	http.ListenAndServe(":8080", nil)
 }
 
-func helloHandler(w http.ResponseWriter , r *http.Request){
-	fmt.Fprint(w,"Hello World!")
-}
-
-func goodbyeHandler(w http.ResponseWriter , r *http.Request){
-	fmt.Fprint(w,"Goodbye!")
+func indexHandle(w http.ResponseWriter, r *http.Request) {
+	templates.ExecuteTemplate(w, "index.html", nil)
 }
